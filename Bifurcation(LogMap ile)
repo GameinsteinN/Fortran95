@@ -18,9 +18,9 @@ open(unit=10,file='L-map.txt',status='unknown')
 x(0)=x0
 
 do n=0,50
-x(n+1) = Lambda * x(n) * (1-x(n))
-!write(*,*) n , x(n)
-write(10,100) n , x(n)
+ x(n+1) = Lambda * x(n) * (1-x(n))
+ !write(*,*) n , x(n)
+ write(10,100) n , x(n)
 enddo
 
 100 format(2x,I5,2x,F20.16)
@@ -39,13 +39,13 @@ x=x0
 do mu=1.0,4.0,0.05
    
    do i = 1,500
-   x=mu* x * (1-x)
+    x=mu* x * (1-x)
    enddo
    
    do i = 1,500
-   x=mu* x * (1-x)
-   print*, mu,x
-   write(20,100) mu , x
+    x=mu* x * (1-x)
+    print*, mu,x
+    write(20,100) mu , x
    enddo
 
 end do
