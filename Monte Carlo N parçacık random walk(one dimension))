@@ -1,0 +1,45 @@
+Program one_dimensional_diffusion_N
+IMPLICIT NONE  
+real(8)::r
+integer::time,parcacik
+integer::k
+integer,dimension(500):: x
+integer,dimension(500,500)::P
+integer,dimension(-200:200)::Sepet
+call random_seed()
+open(10,file='n_walk.txt', status="unknown")
+open(20,file='nkonum.txt', status="unknown")
+!Birinci ana kisim: parcacik RW yapiyor…
+DO parcacik = 1,10
+  x(parcacik)=0
+  do time = 1,50
+   call random_number(r)
+   if ( r < 0.5) then 
+   x(parcacik) = x(parcacik) - 1
+   else 
+   x(parcacik) = x(parcacik) + 1
+   endif
+   P(parcacik,time)=x(parcacik) 
+   print*, parcacik,time ,P(parcacik,time)
+   write(10,100) parcacik,time  ,P(parcacik,time)
+  enddo
+ENDDO
+100 format(2x,I5,2x,I5)
+!İkinci ana kisim: parcacik konum bilgisini izliyor
+do k = -10,10
+  Sepet(k)=0
+  do parcacik=1,10
+   do time=1,50
+   if(P(parcacik,time)==k) then
+   Sepet(k) = Sepet(k) + 1
+   endif
+   enddo
+  enddo
+enddo
+! Ucuncu kisim: dagilim fonksiyonu yazdiriliyor
+do k=-10,10
+  print*, k,Sepet(k)
+  write(20,200) k ,Sepet(k)
+enddo
+  200 format(2x,I15,2x,I15)
+End Program
