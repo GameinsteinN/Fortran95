@@ -1,0 +1,54 @@
+program salinim
+IMPLICIT NONE
+Real,dimension(200):: xs,xz
+Integer:: i ,value
+open(unit=10,file='sal2.txt',status='unknown')
+print*,"sonumlu salinim icin 1 zorlanimli salinim için 2 yi seciniz:"; read*,value
+SELECT CASE(value)
+Case(1)
+call sonum_sal(xs)
+do i=1,100
+ write(*,*) i, xs(i)
+ write(10,100) i, xs(i)
+end do
+Case(2)
+call zor_sal(xz)
+do i=1,100
+ write(*,*) i, xz(i)
+ write(10,100) i, xz(i)
+end do
+end SELECT
+100 format (2x,I5,2x,F10.5)
+end program salinim
+
+subroutine zor_sal(xz)
+IMPLICIT NONE
+Real, parameter:: w=2.0
+Real, parameter:: w0=0.5
+Real, parameter:: b=0.05
+Real, parameter:: m=1.0
+Real, parameter:: delta=0.1
+Real, parameter:: F0=1.0
+Real, dimension(200):: xz
+Real:: t,A,ifade
+ifade = (w**2)+(w0**2)+(b*w/m)*2
+A=(F0/m)/SQRT(ifade)
+do t=1,100
+ xz(t) = A*COS(w*t + delta)
+end do 
+end subroutine zor_sal
+
+subroutine sonum_sal(xs)
+IMPLICIT NONE
+Real, parameter:: A=10.05
+Real, parameter:: b=0.05
+Real, parameter:: m=1.05
+Real, parameter:: delta=0.1
+Real, parameter:: k=0.02
+real:: w,t
+Real, dimension(200):: xs
+w = SQRT(k/m+(b/2*m)**2)
+do t=1,100
+ xs(t) = A * EXP(-b*t/2*m) * COS(w*t+delta)
+end do 
+end subroutine
