@@ -1,0 +1,55 @@
+Program LogMap
+IMPLICIT NONE
+real(8):: x0,Lambda
+
+print*,'Lambda parametresinin degeri:'; read*,Lambda
+print*,'x0 degeri:'; read*,x0
+call xk(lambda,x0)
+call bifur(x0)
+End Program
+
+SUBROUTINE xk(Lambda,x0)
+IMPLICIT NONE
+real(8):: x0,Lambda
+integer:: n
+real(8), dimension(120):: x
+open(unit=10,file='L-map.txt',status='unknown')
+
+x(0)=x0
+
+do n=0,50
+x(n+1) = Lambda * x(n) * (1-x(n))
+!write(*,*) n , x(n)
+write(10,100) n , x(n)
+enddo
+
+100 format(2x,I5,2x,F20.16)
+
+End SUBROUTINE
+
+SUBROUTINE bifur(x0)
+IMPLICIT NONE
+real(8):: x,x0
+real(8):: mu
+integer:: i
+
+print*,'x0 degeri:'; read*, x0
+open(unit=20,file='bifur.txt',status='unknown')
+x=x0
+do mu=1.0,4.0,0.05
+   
+   do i = 1,500
+   x=mu* x * (1-x)
+   enddo
+   
+   do i = 1,500
+   x=mu* x * (1-x)
+   print*, mu,x
+   write(20,100) mu , x
+   enddo
+
+end do
+
+100 format(2x,F10.5,2x,F20.16)
+
+end SUBROUTINE
