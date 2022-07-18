@@ -1,0 +1,97 @@
+PROGRAM Siralama
+IMPLICIT NONE
+INTEGER::i, j, n ,v
+INTEGER,DIMENSION(100):: X
+INTEGER,DIMENSION(100):: Y
+
+WRITE (*,*) 'Kac tane sayiyi siralamak istiyorsunuz ?' 
+READ (*,*) n
+
+WRITE (*,*) 'Sayıları sırasıyla yazınız...'
+READ (*,*) (X(i), i=1,n)
+
+
+Do i=1,n
+  Y(i)=i
+ENDDO
+ 
+  WRITE(*,*) "Buyukten kucuge siralamak icin 1 , Kucukten buyuge siralamak icin 2 yi seçiniz:" 
+  Read(*,*) v
+SELECT CASE(v)
+
+Case(1)
+Call BK(X,Y,i,j,n)
+Do i = 1,n
+ Print*, X(i)
+ENDDO
+
+Case(2)
+Call KB(X,Y,i,j,n)
+Do i = 1,n
+ Print*, X(i)
+ENDDO
+
+End SELECT
+
+End PROGRAM Siralama
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SUBROUTINE BK(X,Y,i,j,n)
+
+INTEGER::i, j, n
+INTEGER,DIMENSION(100):: X
+INTEGER,DIMENSION(100):: Y
+
+DO i=1,n
+    DO j= 1,n
+      IF (X(i) .GT. X(j)) THEN
+            Y(i) = X(i)
+            X(i) = X(j)
+            X(j) = Y(i)    
+           END IF
+     END DO
+END DO
+
+
+END SUBROUTINE BK
+
+
+SUBROUTINE KB(X,Y,i,j,n)
+
+INTEGER::i, j, n
+INTEGER,DIMENSION(100):: X
+INTEGER,DIMENSION(100):: Y
+
+DO i=1,n
+    DO j= 1,n
+      IF (X(i) .LT. X(j)) THEN
+            Y(i) = X(i)
+            X(i) = X(j)
+            X(j) = Y(i)    
+           END IF
+     END DO
+END DO
+
+
+END SUBROUTINE KB
